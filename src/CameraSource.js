@@ -7,6 +7,7 @@ export default class CameraSource extends Component {
     this.state = {
       videoSrc: null
     }
+    this.myCanvas = React.createRef();
   }
   
   componentDidMount() {
@@ -23,17 +24,17 @@ export default class CameraSource extends Component {
     this.setState({ videoSrc: window.URL.createObjectURL(stream) });
   }
   
-  // captureImage() {
-  //   if (this.canvas !== undefined) {
-  //     context = this.canvas.getContext("2d");
-  //     context.drawImage(this.videoStream, 0, 0, 800, 600);
-  //   }
-  //   // const image = this.canvas.toDataURL("image/jpeg", 0.5);
-  //   // return image;
-  // }
+  captureImage() {
+    if (this.myCanvas.current) {
+      const context = this.myCanvas.current.getContext("2d");
+      context.drawImage(this.videoStream, 0, 0, 800, 600);
+    }
+    // const image = this.canvas.toDataURL("image/jpeg", 0.5);
+    // return image;
+  }
 
   render() {
-    // this.captureImage();
+    this.captureImage();
     return (
       <div>
         <video
@@ -43,6 +44,7 @@ export default class CameraSource extends Component {
           height="600"
         />
         <canvas
+          ref={this.myCanvas}
           width="800"
           height="600"
           style={{ width: 800, height: 600 }}

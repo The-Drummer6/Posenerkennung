@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 
 export default class CameraSource extends Component {
-
   constructor() {
     super();
     this.state = {
       videoSrc: null
-    }
+    };
     this.myCanvas = React.createRef();
   }
-  
+
   componentDidMount() {
-    navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia || navigator.mediaDevices.oGetUserMedia;
+    navigator.mediaDevices.getUserMedia =
+      navigator.mediaDevices.getUserMedia ||
+      navigator.mediaDevices.webkitGetUserMedia ||
+      navigator.mediaDevices.mozGetUserMedia ||
+      navigator.mediaDevices.msGetUserMedia ||
+      navigator.mediaDevices.oGetUserMedia;
     if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({audio: false, video: true}, this.handleVideo, this.videoError);
+      navigator.mediaDevices.getUserMedia(
+        { audio: false, video: true },
+        this.handleVideo,
+        this.videoError
+      );
     } else {
       console.error("Kacke, Funktion nicht verfügbar in dem Browser");
     }
@@ -23,7 +31,11 @@ export default class CameraSource extends Component {
     // Update the state, triggering the component to re-render with the correct stream
     this.setState({ videoSrc: window.URL.createObjectURL(stream) });
   }
-  
+
+  videoError() {
+    console.error("Video Fehler");
+  }
+
   captureImage() {
     if (this.myCanvas.current) {
       const context = this.myCanvas.current.getContext("2d");
@@ -38,22 +50,15 @@ export default class CameraSource extends Component {
     return (
       <div>
         <video
-          src={this.state.videoSrc} 
+          src={this.state.videoSrc}
           autoPlay={true}
           width="800"
           height="600"
-        />
-        <canvas
-          ref={this.myCanvas}
-          width="800"
-          height="600"
-          style={{ width: 800, height: 600 }}
         />
       </div>
     );
   }
 }
-
 /**
  * captureImage() {    
   const context = this.canvas.getContext("2d")

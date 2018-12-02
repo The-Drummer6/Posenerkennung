@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import CameraSource from "./CameraSource";
+import Webcam from "./Webcam";
 import "./App.css";
+// import * as posenet from "@tensorflow-models/posenet";
 
 class App extends Component {
   render() {
@@ -13,8 +15,7 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
         </header>
-        <CameraSource style={{width: "100%"}} />
-        <p>Hallooooooooooooo</p>
+        <Webcam audio={false} />
       </div>
     );
   }

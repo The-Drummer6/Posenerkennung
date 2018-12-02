@@ -300,6 +300,7 @@ export default class Webcam extends Component {
         playsInline
         style={this.props.style}
         ref={ref => {
+          this.props.senselessFunction(ref);
           this.video = ref;
         }}
       />

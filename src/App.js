@@ -12,8 +12,9 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <CameraSource />
         </header>
+        <CameraSource style={{width: "100%"}} />
+        <p>Hallooooooooooooo</p>
       </div>
     );
   }

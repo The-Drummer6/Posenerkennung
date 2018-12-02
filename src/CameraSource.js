@@ -16,32 +16,26 @@ export default class CameraSource extends Component {
     this.setState({ videoSrc: window.URL.createObjectURL(stream) });
   }
   
-  captureImage() {
-    if (this.canvas !== undefined) {
-      context = this.canvas.getContext("2d");
-      context.drawImage(this.videoStream, 0, 0, 800, 600);
-    }
-    // const image = this.canvas.toDataURL("image/jpeg", 0.5);
-    // return image;
-  }
+  // captureImage() {
+  //   if (this.canvas !== undefined) {
+  //     context = this.canvas.getContext("2d");
+  //     context.drawImage(this.videoStream, 0, 0, 800, 600);
+  //   }
+  //   // const image = this.canvas.toDataURL("image/jpeg", 0.5);
+  //   // return image;
+  // }
 
   render() {
     // this.captureImage();
     return (
       <div>
         <video
-          ref={stream => {
-            this.videoStream = stream;
-          }}
           src={this.state.videoSrc} 
           autoPlay="true"
           width="800"
           height="600"
         />
         <canvas
-          ref={canvas => {
-            this.canvas = canvas;
-          }}
           width="800"
           height="600"
           style={{ width: 800, height: 600 }}

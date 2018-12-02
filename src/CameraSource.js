@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 
 export default class CameraSource extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      videoSrc: null
+    }
+  }
   
   componentDidMount() {
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+    navigator.getUserMedia = navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia || navigator.mediaDevices.oGetUserMedia;
     if (navigator.getUserMedia) {
         navigator.getUserMedia({video: true}, this.handleVideo, this.videoError);
     } else {

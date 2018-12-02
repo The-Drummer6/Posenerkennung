@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import CameraSource from "./CameraSource";
 import Webcam from "./Webcam";
 import "./App.css";
-// import * as posenet from "@tensorflow-models/posenet";
+import * as posenet from "@tensorflow-models/posenet";
 
 class App extends Component {
   render() {

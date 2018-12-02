@@ -10,9 +10,9 @@ export default class CameraSource extends Component {
   }
   
   componentDidMount() {
-    navigator.getUserMedia = navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia || navigator.mediaDevices.oGetUserMedia;
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true}, this.handleVideo, this.videoError);
+    navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia || navigator.mediaDevices.oGetUserMedia;
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({audio: false, video: true}, this.handleVideo, this.videoError);
     } else {
       console.error("Kacke, Funktion nicht verfügbar in dem Browser");
     }
@@ -38,7 +38,7 @@ export default class CameraSource extends Component {
       <div>
         <video
           src={this.state.videoSrc} 
-          autoPlay="true"
+          autoPlay={"true"}
           width="800"
           height="600"
         />

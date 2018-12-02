@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import CameraSource from './CameraSource';
 import './App.css';
 
 class App extends Component {

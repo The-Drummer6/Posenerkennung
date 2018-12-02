@@ -38,7 +38,7 @@ export default class CameraSource extends Component {
       <div>
         <video
           src={this.state.videoSrc} 
-          autoPlay={"true"}
+          autoPlay={true}
           width="800"
           height="600"
         />

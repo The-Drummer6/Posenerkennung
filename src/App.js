@@ -20,14 +20,15 @@ class App extends Component {
   refGetter(ref) {
     this.videoRef = ref;
     this.setState({ refLoaded: true });
+    console.log("Referenz auf Video gesetzt");
   }
 
   componentWillMount() {
     posenet.load().then(net => {
       // posenet model loaded
       console.log("Model loaded");
-      this.setState({ modelLoaded: true });
       this.net = net;
+      this.setState({ modelLoaded: true });
     });
   }
 

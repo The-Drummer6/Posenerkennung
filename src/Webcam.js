@@ -105,6 +105,8 @@ export default class Webcam extends Component {
 
   static userMediaRequested = false;
 
+  referenceToVideoSet = false;
+
   constructor() {
     super();
     this.state = {
@@ -289,6 +291,7 @@ export default class Webcam extends Component {
   }
 
   render() {
+    console.log("Render");
     return (
       <video
         autoPlay
@@ -300,7 +303,10 @@ export default class Webcam extends Component {
         playsInline
         style={this.props.style}
         ref={ref => {
-          this.props.senselessFunction(ref);
+          if (!this.referenceToVideoSet) {
+            this.props.senselessFunction(ref);
+            this.referenceToVideoSet  = true;
+          } 
           this.video = ref;
         }}
       />

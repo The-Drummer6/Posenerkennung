@@ -27,15 +27,6 @@ const constrainStringType = PropTypes.oneOfType([
   })
 ]);
 
-const constrainBooleanType = PropTypes.oneOfType([
-  PropTypes.shape({
-    exact: PropTypes.bool
-  }),
-  PropTypes.shape({
-    ideal: PropTypes.bool
-  })
-]);
-
 const constrainLongType = PropTypes.oneOfType([
   PropTypes.number,
   PropTypes.shape({

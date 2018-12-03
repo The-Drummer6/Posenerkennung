@@ -4,6 +4,7 @@ import * as posenet from "@tensorflow-models/posenet";
 import {
   drawKeypoints
 } from './utils';
+import { relative } from "path";
 
 function hasGetUserMedia() {
   return !!(
@@ -273,7 +274,7 @@ export default class Webcam extends Component {
         .then(pose => {
           console.log(pose.keypoints);
           let context = this.canvasRef.getContext("2d");
-          context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+          context.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height)
           drawKeypoints(pose.keypoints, 0.1, context, 1);
         });
     }, (1 / 1) * 1000);
@@ -289,7 +290,7 @@ export default class Webcam extends Component {
     }
     console.log("Render");
     return (
-      <div>
+      <div style={{position: "relative"}}>
         <video
           autoPlay
           width={this.props.width}

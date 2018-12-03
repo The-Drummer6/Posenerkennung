@@ -17,7 +17,7 @@
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs';
 
-const color = 'aqua';
+const color = 'red';
 const boundingBoxColor = 'red';
 const lineWidth = 2;
 
@@ -65,9 +65,11 @@ export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
   for (let i = 0; i < keypoints.length; i++) {
     const keypoint = keypoints[i];
 
-    //if (keypoint.score < minConfidence) {
-      //continue;
-    //}
+  if (keypoint.score < minConfidence) {
+    continue;
+  }
+
+  console.log(ctx);
 
     const {y, x} = keypoint.position;
     drawPoint(ctx, y * scale, x * scale, 3, color);

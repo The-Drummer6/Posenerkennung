@@ -57,8 +57,8 @@ export default class Webcam extends Component {
   static defaultProps = {
     className: "",
     height: 480,
-    onUserMedia: () => {},
-    onUserMediaError: () => {},
+    onUserMedia: () => { },
+    onUserMediaError: () => { },
     screenshotFormat: "image/webp",
     width: 640,
     screenshotQuality: 0.92
@@ -119,7 +119,7 @@ export default class Webcam extends Component {
   componentWillUpdate(nextProps) {
     if (
       JSON.stringify(nextProps.videoConstraints) !==
-        JSON.stringify(this.props.videoConstraints)
+      JSON.stringify(this.props.videoConstraints)
     ) {
       this.requestUserMedia();
     }
@@ -269,12 +269,13 @@ export default class Webcam extends Component {
   sendFrameToNeuralNet() {
     setInterval(() => {
       this.net
-          .estimateSinglePose(this.video, 0.5, false, 16)
-          .then(pose => {
-            console.log(pose.keypoints);
-            drawKeypoints(pose.keypoints, 0.1, this.ctx, 1);
-          });
-    }, (1/20)*1000);
+        .estimateSinglePose(this.video, 0.5, false, 16)
+        .then(pose => {
+          console.log(pose.keypoints);
+          let context = this.canvasRef.getContext("2d");
+          drawKeypoints(pose.keypoints, 0.1, context, 1);
+        });
+    }, (1 / 1) * 1000);
   }
 
   render() {
@@ -287,22 +288,29 @@ export default class Webcam extends Component {
     }
     console.log("Render");
     return (
-      <video
-        autoPlay
-        width={this.props.width}
-        height={this.props.height}
-        src={this.state.src}
-        muted={true}
-        className={this.props.className}
-        playsInline
-        style={this.props.style}
-        ref={ref => {
-          //if (!this.referenceToVideoSet) {
+      <div>
+        <video
+          autoPlay
+          width={this.props.width}
+          height={this.props.height}
+          src={this.state.src}
+          muted={true}
+          className={this.props.className}
+          playsInline
+          style={this.props.style}
+          ref={ref => {
+            //if (!this.referenceToVideoSet) {
             //this.referenceToVideoSet  = true;
-          //} 
-          this.video = ref;
-        }}
-      />
+            //} 
+            this.video = ref;
+          }}
+        />
+        <canvas
+          ref={ref => { this.canvasRef = ref; }}
+          width={600}
+          height={600}>
+        </canvas>
+      </div>
     );
   }
 }

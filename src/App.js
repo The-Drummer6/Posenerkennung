@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import CameraSource from "./CameraSource";
 import Webcam from "./Webcam";
 import "./App.css";
 

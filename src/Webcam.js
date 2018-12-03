@@ -3,13 +3,8 @@ import PropTypes from "prop-types";
 import * as posenet from "@tensorflow-models/posenet";
 import { loadModelFromIOHandler } from "@tensorflow/tfjs-layers/dist/models";
 import {
-  drawBoundingBox,
-  drawKeypoints,
-  drawPoint,
-  drawSegment,
-  drawSkeleton,
-  renderImageToCanvas,
-} from './demo_util';
+  drawKeypoints
+} from './utils';
 
 function hasGetUserMedia() {
   return !!(
@@ -277,7 +272,8 @@ export default class Webcam extends Component {
       this.net
           .estimateSinglePose(this.video, 0.5, false, 16)
           .then(pose => {
-            console.log(pose);
+            console.log(pose.keypoints);
+            drawKeypoints(pose.keypoints, 0.1, this.ctx, 1);
           });
     }, (1/20)*1000);
   }

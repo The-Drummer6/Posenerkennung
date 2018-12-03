@@ -33,11 +33,13 @@ class App extends Component {
   }
 
   sendFrameToNeuralNet() {
-    this.net
+    setInterval(() => {
+      this.net
           .estimateSinglePose(this.videoRef, 0.5, false, 16)
           .then(pose => {
             console.log(pose);
           });
+    }, (1/20)*1000);
   }
 
   render() {

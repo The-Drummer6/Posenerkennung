@@ -32,16 +32,20 @@ class App extends Component {
     });
   }
 
+  sendFrameToNeuralNet() {
+    this.net
+          .estimateSinglePose(this.videoRef, 0.5, false, 16)
+          .then(pose => {
+            console.log(pose);
+          });
+  }
+
   render() {
     if (this.net) {
       console.log("Hier this.net");
       if (this.videoRef) {
         console.log("Hier videoRef");
-        this.net
-          .estimateSinglePose(this.videoRef, 0.5, false, 16)
-          .then(pose => {
-            console.log(pose);
-          });
+        this.sendFrameToNeuralNet();
       }
     }
     return (
@@ -52,7 +56,7 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
         </header>
-        <Webcam audio={false} senselessFunction={this.refGetter.bind(this)} />
+        <Webcam audio={false} width={600} height={600} senselessFunction={this.refGetter.bind(this)} />
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import * as posenet from "@tensorflow-models/posenet";
+import { loadModelFromIOHandler } from "@tensorflow/tfjs-layers/dist/models";
 
 function hasGetUserMedia() {
   return !!(
@@ -83,11 +85,23 @@ export default class Webcam extends Component {
 
   referenceToVideoSet = false;
 
+  net = null;
+
   constructor() {
     super();
     this.state = {
-      hasUserMedia: false
+      hasUserMedia: false,
+      modelLoaded: false
     };
+  }
+
+  componentWillMount() {
+    posenet.load().then(net => {
+      // posenet model loaded
+      console.log("Model loaded");
+      this.net = net;
+      this.setState({ modelLoaded: true });
+    });
   }
 
   componentDidMount() {
@@ -250,7 +264,24 @@ export default class Webcam extends Component {
     this.props.onUserMedia();
   }
 
+  sendFrameToNeuralNet() {
+    setInterval(() => {
+      this.net
+          .estimateSinglePose(this.video, 0.5, false, 16)
+          .then(pose => {
+            console.log(pose);
+          });
+    }, (1/20)*1000);
+  }
+
   render() {
+    if (this.net) {
+      console.log("Hier this.net");
+      if (this.video) {
+        console.log("Hier videoRef");
+        this.sendFrameToNeuralNet();
+      }
+    }
     console.log("Render");
     return (
       <video
@@ -263,10 +294,9 @@ export default class Webcam extends Component {
         playsInline
         style={this.props.style}
         ref={ref => {
-          if (!this.referenceToVideoSet) {
-            this.props.senselessFunction(ref);
-            this.referenceToVideoSet  = true;
-          } 
+          //if (!this.referenceToVideoSet) {
+            //this.referenceToVideoSet  = true;
+          //} 
           this.video = ref;
         }}
       />

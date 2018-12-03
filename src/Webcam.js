@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as posenet from "@tensorflow-models/posenet";
 import {
-  drawKeypoints
+  drawKeypoints, drawSkeleton
 } from './utils';
 import { relative } from "path";
 
@@ -276,6 +276,7 @@ export default class Webcam extends Component {
           let context = this.canvasRef.getContext("2d");
           context.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height)
           drawKeypoints(pose.keypoints, 0.1, context, 1);
+          drawSkeleton(pose.keypoints, 0.1, context);
         });
     }, (1 / 1) * 1000);
   }

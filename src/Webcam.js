@@ -48,18 +48,6 @@ const constrainLongType = PropTypes.oneOfType([
 
 const constrainDoubleType = constrainLongType;
 
-const audioConstraintType = PropTypes.shape({
-  deviceId: constrainStringType,
-  groupId: constrainStringType,
-  autoGainControl: constrainBooleanType,
-  channelCount: constrainLongType,
-  latency: constrainDoubleType,
-  noiseSuppression: constrainBooleanType,
-  sampleRate: constrainLongType,
-  sampleSize: constrainLongType,
-  volume: constrainDoubleType
-});
-
 const videoConstraintType = PropTypes.shape({
   deviceId: constrainStringType,
   groupId: constrainStringType,
@@ -72,7 +60,6 @@ const videoConstraintType = PropTypes.shape({
 
 export default class Webcam extends Component {
   static defaultProps = {
-    audio: true,
     className: "",
     height: 480,
     onUserMedia: () => {},
@@ -83,7 +70,6 @@ export default class Webcam extends Component {
   };
 
   static propTypes = {
-    audio: PropTypes.bool,
     onUserMedia: PropTypes.func,
     onUserMediaError: PropTypes.func,
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -97,7 +83,6 @@ export default class Webcam extends Component {
     className: PropTypes.string,
     screenshotQuality: PropTypes.number,
     screenshotWidth: PropTypes.number,
-    audioConstraints: audioConstraintType,
     videoConstraints: videoConstraintType
   };
 
@@ -126,8 +111,6 @@ export default class Webcam extends Component {
 
   componentWillUpdate(nextProps) {
     if (
-      JSON.stringify(nextProps.audioConstraints) !==
-        JSON.stringify(this.props.audioConstraints) ||
       JSON.stringify(nextProps.videoConstraints) !==
         JSON.stringify(this.props.videoConstraints)
     ) {
@@ -141,9 +124,8 @@ export default class Webcam extends Component {
 
     Webcam.userMediaRequested = false;
     if (Webcam.mountedInstances.length === 0 && this.state.hasUserMedia) {
-      if (this.stream.getVideoTracks && this.stream.getAudioTracks) {
+      if (this.stream.getVideoTracks) {
         this.stream.getVideoTracks().map(track => track.stop());
-        this.stream.getAudioTracks().map(track => track.stop());
       } else {
         this.stream.stop();
       }
@@ -193,14 +175,10 @@ export default class Webcam extends Component {
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia;
 
-    const sourceSelected = (audioConstraints, videoConstraints) => {
+    const sourceSelected = (videoConstraints) => {
       const constraints = {
         video: videoConstraints || true
       };
-
-      if (this.props.audio) {
-        constraints.audio = audioConstraints || true;
-      }
 
       navigator.mediaDevices
         .getUserMedia(constraints)
@@ -217,7 +195,7 @@ export default class Webcam extends Component {
     };
 
     if ("mediaDevices" in navigator) {
-      sourceSelected(this.props.audioConstraints, this.props.videoConstraints);
+      sourceSelected(this.props.videoConstraints);
     } else {
       const optionalSource = id => ({ optional: [{ sourceId: id }] });
 
@@ -236,21 +214,13 @@ export default class Webcam extends Component {
       };
 
       MediaStreamTrack.getSources(sources => {
-        let audioSource = null;
         let videoSource = null;
 
         sources.forEach(source => {
-          if (source.kind === "audio") {
-            audioSource = source.id;
-          } else if (source.kind === "video") {
+          if (source.kind === "video") {
             videoSource = source.id;
           }
         });
-
-        const audioSourceId = constraintToSourceId(this.props.audioConstraints);
-        if (audioSourceId) {
-          audioSource = audioSourceId;
-        }
 
         const videoSourceId = constraintToSourceId(this.props.videoConstraints);
         if (videoSourceId) {
@@ -258,7 +228,6 @@ export default class Webcam extends Component {
         }
 
         sourceSelected(
-          optionalSource(audioSource),
           optionalSource(videoSource)
         );
       });
@@ -298,7 +267,7 @@ export default class Webcam extends Component {
         width={this.props.width}
         height={this.props.height}
         src={this.state.src}
-        muted={this.props.audio}
+        muted={true}
         className={this.props.className}
         playsInline
         style={this.props.style}

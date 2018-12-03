@@ -273,6 +273,7 @@ export default class Webcam extends Component {
         .then(pose => {
           console.log(pose.keypoints);
           let context = this.canvasRef.getContext("2d");
+          context.clearRect(0, 0, this.canvas.width, this.canvas.height)
           drawKeypoints(pose.keypoints, 0.1, context, 1);
         });
     }, (1 / 1) * 1000);
@@ -297,7 +298,7 @@ export default class Webcam extends Component {
           muted={true}
           className={this.props.className}
           playsInline
-          style={this.props.style}
+          style={{position: "absolute", top: 0, left: 0}}
           ref={ref => {
             //if (!this.referenceToVideoSet) {
             //this.referenceToVideoSet  = true;
@@ -308,7 +309,8 @@ export default class Webcam extends Component {
         <canvas
           ref={ref => { this.canvasRef = ref; }}
           width={600}
-          height={600}>
+          height={600}
+          style={{position: "absolute", top: 0, left: 0}}>
         </canvas>
       </div>
     );

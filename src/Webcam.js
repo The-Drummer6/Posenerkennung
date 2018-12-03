@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as posenet from "@tensorflow-models/posenet";
 import { loadModelFromIOHandler } from "@tensorflow/tfjs-layers/dist/models";
+import {
+  drawBoundingBox,
+  drawKeypoints,
+  drawPoint,
+  drawSegment,
+  drawSkeleton,
+  renderImageToCanvas,
+} from './demo_util';
 
 function hasGetUserMedia() {
   return !!(

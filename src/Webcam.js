@@ -4,6 +4,7 @@ import * as posenet from "@tensorflow-models/posenet";
 import {
   drawKeypoints, drawSkeleton
 } from './utils';
+import PixiDrawing from './PixiDrawing';
 import { relative } from "path";
 
 function hasGetUserMedia() {
@@ -286,7 +287,7 @@ export default class Webcam extends Component {
       console.log("Hier this.net");
       if (this.video) {
         console.log("Hier videoRef");
-        this.sendFrameToNeuralNet();
+        // this.sendFrameToNeuralNet();
       }
     }
     console.log("Render");
@@ -314,6 +315,7 @@ export default class Webcam extends Component {
           height={600}
           style={{position: "absolute", top: 0, left: 0}}>
         </canvas>
+        <PixiDrawing />
       </div>
     );
   }

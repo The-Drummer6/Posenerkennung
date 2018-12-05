@@ -86,9 +86,9 @@ export default class Webcam extends Component {
 
   static userMediaRequested = false;
 
-  referenceToVideoSet = false;
-
   net = null;
+
+  pixiDrawing = null;
 
   constructor() {
     super();
@@ -277,8 +277,9 @@ export default class Webcam extends Component {
           context.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height)
           drawKeypoints(pose.keypoints, 0.1, context, 1);
           drawSkeleton(pose.keypoints, 0.1, context);
+          this.pixiDrawing.updateStickmanPosition(pose.keypoints);
         });
-    }, (1 / 1) * 1000);
+    }, (1 / 5) * 1000);
   }
 
   render() {
@@ -286,12 +287,12 @@ export default class Webcam extends Component {
       console.log("Hier this.net");
       if (this.video) {
         console.log("Hier videoRef");
-        // this.sendFrameToNeuralNet();
+        this.sendFrameToNeuralNet();
       }
     }
     console.log("Render");
     return (
-      <div style={{position: "relative"}}>
+      <div style={{ position: "relative" }}>
         <video
           autoPlay
           width={this.props.width}
@@ -300,11 +301,8 @@ export default class Webcam extends Component {
           muted={true}
           className={this.props.className}
           playsInline
-          style={{position: "absolute", top: 0, left: 0}}
+          style={{ position: "absolute", top: 0, left: 0 }}
           ref={ref => {
-            //if (!this.referenceToVideoSet) {
-            //this.referenceToVideoSet  = true;
-            //} 
             this.video = ref;
           }}
         />
@@ -312,9 +310,9 @@ export default class Webcam extends Component {
           ref={ref => { this.canvasRef = ref; }}
           width={600}
           height={600}
-          style={{position: "absolute", top: 0, left: 0}}>
+          style={{ position: "absolute", top: 0, left: 0 }}>
         </canvas>
-        <PixiDrawing />
+        <PixiDrawing ref={(ref) => { this.pixiDrawing = ref; }} />
       </div>
     );
   }

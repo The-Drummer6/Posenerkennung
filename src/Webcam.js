@@ -272,7 +272,6 @@ export default class Webcam extends Component {
       this.net
         .estimateSinglePose(this.video, 0.5, false, 16)
         .then(pose => {
-          console.log(pose.keypoints);
           let context = this.canvasRef.getContext("2d");
           context.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height)
           drawKeypoints(pose.keypoints, 0.1, context, 1);

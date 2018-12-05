@@ -48,8 +48,6 @@ export default class PixiDrawing extends React.Component {
                 this.stickmanShape.shoulderLine.lineStyle(20, 0x291dd1, 1);
                 this.stickmanShape.shoulderLine.moveTo(0, 0);
                 this.stickmanShape.shoulderLine.lineTo(0, 0);
-                // this.stickmanShape.shoulderLine.x = 32;
-                // this.stickmanShape.shoulderLine.y = 32;
                 this.stickmanShape.shoulderLine.endFill();
                 this.app.stage.addChild(this.stickmanShape.shoulderLine);
 
@@ -57,7 +55,7 @@ export default class PixiDrawing extends React.Component {
                 this.app.stage.addChild(this.stickmanShape.leftHandSprite);
                 this.app.stage.addChild(barSprite);
 
-                this.app.ticker.add(delta => { this.pixiLoop(delta) });
+                //this.app.ticker.add(delta => { this.pixiLoop(delta) });
             });
     }
 
@@ -84,24 +82,22 @@ export default class PixiDrawing extends React.Component {
     }
 
     updateStickmanPosition(keypoints) {
-        console.log("UPDATTTEEEE");
+        this.stickmanShape.shoulderLine.clear();
+        this.stickmanShape.shoulderLine.lineStyle(20, 0x291dd1, 1);
         for (let i = 0; i < keypoints.length; i++) {
-            if (i.part === "nose") {
-                this.stickmanShape.headSprite.set(i.position.x, i.position.y);
+            let bodypart = keypoints[i];
+            if (bodypart.part === "nose") {
+                this.stickmanShape.headSprite.position.x = bodypart.position.x;
+                this.stickmanShape.headSprite.position.y = bodypart.position.y;
             }
-            else if (i.part === "leftShoulder") {
-                this.stickmanShape.shoulderLine.moveTo(i.position.x, i.position.y);
-            } else if (i.part === "rightShoulder") {
-                this.stickmanShape.shoulderLine.lineTo(i.position.x, i.position.y);
+            else if (bodypart.part === "leftShoulder") {
+                this.stickmanShape.shoulderLine.moveTo(bodypart.position.x, bodypart.position.y);
+            } else if (bodypart.part === "rightShoulder") {
+                this.stickmanShape.shoulderLine.lineTo(bodypart.position.x, bodypart.position.y);
             }
         }
-    }
-
-    pixiLoop() {
-        this.stickmanShape.headSprite.position.x++;
-        this.stickmanShape.headSprite.position.y++;
-        this.stickmanShape.leftHandSprite.position.x++;
-        this.stickmanShape.leftHandSprite.position.y++;
+        this.stickmanShape.shoulderLine.endFill();
+        this.app.render();
     }
 
     /**

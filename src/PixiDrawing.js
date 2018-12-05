@@ -1,36 +1,50 @@
 import * as React from 'react';
 import * as Pixi from 'pixi.js';
+import myImage from './resources/circle-shape-outline.png';
 
 export default class PixiDrawing extends React.Component {
 
-    static CIRCLE_PATH = "../resources/circle-shape-outline.png";
+    static CIRCLE = "circle-shape-outline";
 
-    app = null;
     gameCanvas = null;
+    pixi_cnt = null;
 
     constructor() {
         super();
-    }
-
-    setup() {
-        let sprite = new Pixi.Sprite(
-            Pixi.loader.resources[PixiDrawing.CIRCLE_PATH].texture
-        );
-        this.app.stage.addChild(sprite);
-    }
-
-    componentDidMount() {
         this.app = new Pixi.Application({
             width: 600,
             height: 600,
-            antialias: true
+            antialias: true,
+            transparent: false
         });
-        this.gameCanvas.appendChild(this.app.view);
-        this.app.start();
+    }
 
+    setup() {
         Pixi.loader
-            .add(PixiDrawing.CIRCLE_PATH)
-            .load(() => { this.setup(); });
+            .add(PixiDrawing.CIRCLE, myImage)
+            .load(() => {
+                console.log("setup");
+                let sprite = new Pixi.Sprite(
+                    Pixi.loader.resources[PixiDrawing.CIRCLE].texture
+                );
+                this.app.stage.addChild(sprite);
+                sprite.visible = true;
+            });
+    }
+
+    updatePixiCnt(element) {
+        // the element is the DOM object that we will use as container to add pixi stage(canvas)
+        this.pixi_cnt = element;
+        //now we are adding the application to the DOM element which we got from the Ref.
+        if(this.pixi_cnt && this.pixi_cnt.children.length<=0) {
+           this.pixi_cnt.appendChild(this.app.view);
+           //The setup function is a custom function that we created to add the sprites. We will this below
+           this.setup();
+        }
+     };
+
+    componentDidMount() {
+        this.app.start();
     }
 
     /**
@@ -46,7 +60,7 @@ export default class PixiDrawing extends React.Component {
     render() {
         let component = this;
         return (
-            <div ref={(thisDiv) => { component.gameCanvas = thisDiv }} />
+            <div ref={this.updatePixiCnt.bind(this)} />
         );
     }
 }

@@ -5,7 +5,6 @@ import {
   drawKeypoints, drawSkeleton
 } from './utils';
 import PixiDrawing from './PixiDrawing';
-import { relative } from "path";
 
 function hasGetUserMedia() {
   return !!(

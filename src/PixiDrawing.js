@@ -47,8 +47,8 @@ export default class PixiDrawing extends React.Component {
                 this.stickmanShape.leftHandSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.CIRCLE].texture);
                 this.stickmanShape.rightHandSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.CIRCLE].texture);
                 this.stickmanShape.headSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.HEAD].texture);
-                this.stickmanShape.leftFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT2].texture);
-                this.stickmanShape.rightFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT].texture);
+                this.stickmanShape.leftFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT].texture);
+                this.stickmanShape.rightFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT2].texture);
 
                 this.stickmanShape.leftHandSprite.scale.set(0.3, 0.3);
                 this.stickmanShape.rightHandSprite.scale.set(0.3, 0.3);
@@ -64,7 +64,7 @@ export default class PixiDrawing extends React.Component {
                 this.app.stage.addChild(this.stickmanShape.leftHandSprite);
                 this.app.stage.addChild(this.stickmanShape.rightHandSprite);
                 this.app.stage.addChild(this.stickmanShape.leftFootSprite);
-                //this.app.stage.addChild(this.stickmanShape.rightFootSprite);
+                this.app.stage.addChild(this.stickmanShape.rightFootSprite);
             });
     }
 
@@ -105,8 +105,9 @@ export default class PixiDrawing extends React.Component {
         console.log(bodypartsAsDict);
 
         // Kopf, Hand und Fuß
-        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x - 30;
+        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x;
         this.stickmanShape.headSprite.position.y = bodypartsAsDict.nose.y - 30;
+        
 
         this.stickmanShape.leftHandSprite.position.x = bodypartsAsDict.leftWrist.x;
         this.stickmanShape.leftHandSprite.position.y = bodypartsAsDict.leftWrist.y;
@@ -115,7 +116,7 @@ export default class PixiDrawing extends React.Component {
 
         this.stickmanShape.leftFootSprite.position.x = bodypartsAsDict.leftAnkle.x;
         this.stickmanShape.leftFootSprite.position.y = bodypartsAsDict.leftAnkle.y;
-        this.stickmanShape.rightFootSprite.position.x = bodypartsAsDict.rightAnkle.x;
+        this.stickmanShape.rightFootSprite.position.x = bodypartsAsDict.rightAnkle.x - 40;
         this.stickmanShape.rightFootSprite.position.y = bodypartsAsDict.rightAnkle.y;
 
         this.stickmanShape.drawingLayer.moveTo(bodypartsAsDict.leftWrist.x, bodypartsAsDict.leftWrist.y);

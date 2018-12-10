@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import Webcam from "./Webcam";
 import "./App.css";
 

@@ -1,14 +1,18 @@
 import * as React from 'react';
 import * as Pixi from 'pixi.js';
+
 import circleImage from './resources/circle-shape-outline.png';
-import barImage from './resources/bar.png';
 import headImage from './resources/smile.png';
+import footImage from './resources/sneaker.png';
+import footImage2 from './resources/sneaker2.png';
 
 export default class PixiDrawing extends React.Component {
 
     static CIRCLE = "circle-shape-outline";
     static BAR = "bar";
     static HEAD = "smile";
+    static FOOT = "sneaker";
+    static FOOT2 = "sneaker2";
 
     gameCanvas = null;
     pixi_cnt = null;
@@ -17,6 +21,8 @@ export default class PixiDrawing extends React.Component {
         headSprite: null,
         leftHandSprite: null,
         rightHandSprite: null,
+        leftFootSprite: null,
+        rightFootSprite: null,
         drawingLayer: null
     }
 
@@ -33,18 +39,21 @@ export default class PixiDrawing extends React.Component {
     setup() {
         Pixi.loader
             .add(PixiDrawing.CIRCLE, circleImage)
-            .add(PixiDrawing.BAR, barImage)
             .add(PixiDrawing.HEAD, headImage)
+            .add(PixiDrawing.FOOT, footImage)
+            .add(PixiDrawing.FOOT2, footImage2)
             .load(() => {
                 console.log("setup");
                 this.stickmanShape.leftHandSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.CIRCLE].texture);
                 this.stickmanShape.rightHandSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.CIRCLE].texture);
-                let barSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.BAR].texture);
                 this.stickmanShape.headSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.HEAD].texture);
+                this.stickmanShape.leftFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT2].texture);
+                this.stickmanShape.rightFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT].texture);
 
                 this.stickmanShape.leftHandSprite.scale.set(0.3, 0.3);
                 this.stickmanShape.rightHandSprite.scale.set(0.3, 0.3);
-                barSprite.scale.set(0.3, 0.1);
+                this.stickmanShape.leftFootSprite.scale.set(0.6, 0.6);
+                this.stickmanShape.rightFootSprite.scale.set(0.6, 0.6);
 
                 this.stickmanShape.drawingLayer = new Pixi.Graphics();
                 this.stickmanShape.drawingLayer.lineStyle(20, 0x291dd1, 1);
@@ -54,6 +63,8 @@ export default class PixiDrawing extends React.Component {
                 this.app.stage.addChild(this.stickmanShape.headSprite);
                 this.app.stage.addChild(this.stickmanShape.leftHandSprite);
                 this.app.stage.addChild(this.stickmanShape.rightHandSprite);
+                this.app.stage.addChild(this.stickmanShape.leftFootSprite);
+                //this.app.stage.addChild(this.stickmanShape.rightFootSprite);
             });
     }
 
@@ -93,14 +104,19 @@ export default class PixiDrawing extends React.Component {
         }
         console.log(bodypartsAsDict);
 
+        // Kopf, Hand und Fuß
         this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x - 30;
         this.stickmanShape.headSprite.position.y = bodypartsAsDict.nose.y - 30;
 
         this.stickmanShape.leftHandSprite.position.x = bodypartsAsDict.leftWrist.x;
         this.stickmanShape.leftHandSprite.position.y = bodypartsAsDict.leftWrist.y;
-
         this.stickmanShape.rightHandSprite.position.x = bodypartsAsDict.rightWrist.x;
-        this.stickmanShape.rightHandSprite.position.y = bodypartsAsDict.rightWrist.y
+        this.stickmanShape.rightHandSprite.position.y = bodypartsAsDict.rightWrist.y;
+
+        this.stickmanShape.leftFootSprite.position.x = bodypartsAsDict.leftAnkle.x;
+        this.stickmanShape.leftFootSprite.position.y = bodypartsAsDict.leftAnkle.y;
+        this.stickmanShape.rightFootSprite.position.x = bodypartsAsDict.rightAnkle.x;
+        this.stickmanShape.rightFootSprite.position.y = bodypartsAsDict.rightAnkle.y;
 
         this.stickmanShape.drawingLayer.moveTo(bodypartsAsDict.leftWrist.x, bodypartsAsDict.leftWrist.y);
         this.stickmanShape.drawingLayer.lineTo(bodypartsAsDict.leftElbow.x, bodypartsAsDict.leftElbow.y);

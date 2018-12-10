@@ -97,10 +97,6 @@ export default class PixiDrawing extends React.Component {
         let bodypartsAsDict = {};
         for (let i = 0; i < keypoints.length; i++) {
             let bodypart = keypoints[i];
-
-            if (bodypart.score < 0.8) {
-                continue;
-            }
             bodypartsAsDict[bodypart.part] = {
                 x: bodypart.position.x,
                 y: bodypart.position.y,

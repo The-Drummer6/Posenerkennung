@@ -99,7 +99,7 @@ export default class Webcam extends Component {
   }
 
   componentWillMount() {
-    posenet.load().then(net => {
+    posenet.load(1.0).then(net => {
       // posenet model loaded
       console.log("Model loaded");
       this.net = net;

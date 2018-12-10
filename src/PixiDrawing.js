@@ -106,7 +106,7 @@ export default class PixiDrawing extends React.Component {
         console.log(bodypartsAsDict);
 
         // Kopf, Hand und Fuß
-        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x - 10;
+        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x - 30;
         this.stickmanShape.headSprite.position.y = bodypartsAsDict.nose.y - 30;
         
 

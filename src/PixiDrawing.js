@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Pixi from 'pixi.js';
 
 import circleImage from './resources/circle-shape-outline.png';
-import headImage from './resources/MemeFace.png';
+import headImage from './resources/smile.png';
 import footImage from './resources/sneaker.png';
 import footImage2 from './resources/sneaker2.png';
 

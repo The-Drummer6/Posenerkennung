@@ -116,7 +116,7 @@ export default class PixiDrawing extends React.Component {
 
         this.stickmanShape.leftFootSprite.position.x = bodypartsAsDict.leftAnkle.x;
         this.stickmanShape.leftFootSprite.position.y = bodypartsAsDict.leftAnkle.y;
-        this.stickmanShape.rightFootSprite.position.x = bodypartsAsDict.rightAnkle.x - 40;
+        this.stickmanShape.rightFootSprite.position.x = bodypartsAsDict.rightAnkle.x - 60;
         this.stickmanShape.rightFootSprite.position.y = bodypartsAsDict.rightAnkle.y;
 
         this.stickmanShape.drawingLayer.moveTo(bodypartsAsDict.leftWrist.x, bodypartsAsDict.leftWrist.y);

@@ -49,7 +49,8 @@ export default class PixiDrawing extends React.Component {
                 this.stickmanShape.headSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.HEAD].texture);
                 this.stickmanShape.leftFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT].texture);
                 this.stickmanShape.rightFootSprite = new Pixi.Sprite(Pixi.loader.resources[PixiDrawing.FOOT2].texture);
-
+                
+                this.stickmanShape.headSprite.scale.set(0.8, 0.8);
                 this.stickmanShape.leftHandSprite.scale.set(0.3, 0.3);
                 this.stickmanShape.rightHandSprite.scale.set(0.3, 0.3);
                 this.stickmanShape.leftFootSprite.scale.set(0.6, 0.6);
@@ -105,7 +106,7 @@ export default class PixiDrawing extends React.Component {
         console.log(bodypartsAsDict);
 
         // Kopf, Hand und Fuß
-        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x;
+        this.stickmanShape.headSprite.position.x = bodypartsAsDict.nose.x - 10;
         this.stickmanShape.headSprite.position.y = bodypartsAsDict.nose.y - 30;
         
 
